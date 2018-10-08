@@ -13,7 +13,7 @@ output:
 
 # Section 1: Decision Tree  
 Decision tree is a supervised machine learning model used in data mining. The goal is to create a model that predicts the value of a target variable based on several input variables. Tree based models empower predictive models with high accuracy, stability and ease of interpretation.   
-<center>![](img/dt.png){width=200px}</center>  
+<center>![decision tree](img/dt.png){width=200px}</center>  
   
 #### __Two types of decision trees__  
 Types of decision tree is based on the type of target variable we use.  
@@ -29,7 +29,7 @@ Types of decision tree is based on the type of target variable we use.
 6. __Pruning__: Removing sub-nodes of a decision node called pruning, it's the opposite process of splitting.  
 7. __Parent and Child Node__: A node which is divided into sub-nodes is called parent node of sub-nodes where as sub-nodes are the children of parent node.  
   
-<center>![](img/Decision_Tree_nodes.png){width=500px}</center> 
+<center>![tree nodes](img/Decision_Tree_nodes.png){width=500px}</center> 
   
 #### __Advantages__  
 1. Easy to understand and interpret. Decision tree output is very easy to understand even for people without analytical background. No requirment of statistical knowledge to read and interpret them. Its graphical representation is very intuitive and users can easily relate their hypothesis.  
