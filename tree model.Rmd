@@ -11,16 +11,16 @@ output:
 ---
 
 
-#Section 1: Decision Tree  
+# Section 1: Decision Tree  
 Decision tree is a supervised machine learning model used in data mining. The goal is to create a model that predicts the value of a target variable based on several input variables. Tree based models empower predictive models with high accuracy, stability and ease of interpretation.   
 <center>![](C:/Users/wwei/OneDrive - Network for Good/Documents/Wes/tree_model/dt.png){width=200px}</center>  
   
-####__Two types of decision trees__  
+#### __Two types of decision trees__  
 Types of decision tree is based on the type of target variable we use.  
 1. __Classification Trees__: A tree with categorical target variable is called classification or categorical decition tree. Such as True/False, Yes/No, education levels.    
 2. __Regression Trees__: A tree with continuous target variable(typically real numbers) is called regression tree. Such as income, area.  
   
-####__Important Terminology related to Decision Trees__  
+#### __Important Terminology related to Decision Trees__  
 1. __Root Node__: The topmost decision node in a tree which corresponds to the best predictor called root node.  
 2. __Splitting__: The process of dividing a node into two or more sub-nodes.  
 3. __Decision Node__: When a sub-node splits into further sub-nodes, then it is called decision node.  
@@ -31,7 +31,7 @@ Types of decision tree is based on the type of target variable we use.
   
 <center>![](C:/Users/wwei/OneDrive - Network for Good/Documents/Wes/tree_model/Decision_Tree_nodes.png){width=500px}</center> 
   
-####__Advantages__  
+#### __Advantages__  
 1. Easy to understand and interpret. Decision tree output is very easy to understand even for people without analytical background. No requirment of statistical knowledge to read and interpret them. Its graphical representation is very intuitive and users can easily relate their hypothesis.  
 2. Useful in data exploration and variable selection. Decision tree is one of the fastest way to identify most significant variables and relation between two or more variables. With the help of decision tree, we can create new variables/features that has better power to predict target variable.  
 3. Less data cleaning required. It required less data cleaning or preprocessing procedure compared to some other modeling method.  
@@ -39,7 +39,7 @@ Types of decision tree is based on the type of target variable we use.
 5. Data type is not a constraint: It can handle both numerical and categorical variables.  
 6. Non Parametric Method: Decision trees have no assumptions about the space distribution and the classifier structure.  
   
-####__Disadvantages__  
+#### __Disadvantages__  
 1. Over fitting. Over fitting is one of the most practical difficulty for decision tree models. This problem gets solved by setting constraints on model parameters and pruning (discussed in detailed below).  
 2. Not fit for continuous variables: While working with continuous numerical variables, decision tree looses information when it categorizes variables in different categories.  
   
@@ -50,6 +50,6 @@ Types of decision tree is based on the type of target variable we use.
   
   
   
-#Section 2: regression Tree
+# Section 2: regression Tree
 <a href="#header">Back to top</a>
 
