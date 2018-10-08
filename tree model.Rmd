@@ -8,8 +8,6 @@ output:
     theme: sandstone
     toc: True
     toc_float: True
-    keep_md: true
-
 ---
 
 
