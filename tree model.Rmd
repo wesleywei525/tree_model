@@ -13,9 +13,9 @@ output:
 
 # Section 1: Decision Tree  
 Decision tree is a supervised machine learning model used in data mining. The goal is to create a model that predicts the value of a target variable based on several input variables. Tree based models empower predictive models with high accuracy, stability and ease of interpretation.   
-<center>
+<p align="center">
 <img src="img/dt.png", width=200px> 
-</center>  
+</p>
   
 #### __Two types of decision trees__  
 Types of decision tree is based on the type of target variable we use.  
