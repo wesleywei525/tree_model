@@ -1,0 +1,34 @@
+
+
+```{r}
+library("gistr")
+
+
+
+```
+
+---
+title: "Tree model"
+output:
+  html_document:
+    fig_height: 4
+    fig_width: 10
+    highlight: tango
+    theme: sandstone
+    toc: True
+    toc_float: True
+
+---
+
+
+#Section 1: Decision Tree
+Decision tree is a supervised machine learning model used in data mining. The goal is to create a model that predicts the value of a target variable based on several input variables.  
+
+####Two types of decision trees
+Types of a tree is depends on the 
+__a. Classification Trees__: Target variable can take a discrete set of values. Such as True/False, Yes/No, education levels.    
+__b. Regression Trees__: Target variable can take continuous values(typically real numbers). Such as income, area.
+
+#Section 2: regression Tree
+<a href="#header">Back to top</a>
+
