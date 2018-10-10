@@ -18,12 +18,15 @@ Decision tree is a supervised machine learning model used in data mining. The go
 <img src="img/dt.png", width=200px> 
 </p>
   
-#### __Two types of decision trees__  
-Types of decision tree is based on the type of target variable we use.  
-1. __Classification Trees__: A tree with categorical target variable is called classification or categorical decition tree. Such as True/False, Yes/No, education levels.    
-2. __Regression Trees__: A tree with continuous target variable(typically real numbers) is called regression tree. Such as income, area.  
+## 1.1 Basic background of decision tree model  
   
-#### __Important Terminology related to Decision Trees__  
+### 1.1.1 Two types of decision trees  
+Types of decision tree is based on the type of target variable we use.  
+  
+a. __Classification Trees__: A tree with categorical target variable is called classification or categorical decition tree. Such as True/False, Yes/No, education levels.    
+b. __Regression Trees__: A tree with continuous target variable(typically real numbers) is called regression tree. Such as income, area.  
+  
+### 1.1.2 Important Terminology related to Decision Trees  
 1. __Root Node__: The topmost decision node in a tree which corresponds to the best predictor called root node.  
 2. __Splitting__: The process of dividing a node into two or more sub-nodes.  
 3. __Decision Node__: When a sub-node splits into further sub-nodes, then it is called decision node.  
@@ -36,7 +39,7 @@ Types of decision tree is based on the type of target variable we use.
 <img src="img/Decision_Tree_nodes.png", width=500px> 
 </p>  
 
-#### __Advantages__  
+### 1.1.3 Advantages of tree model  
 1. Easy to understand and interpret. Decision tree output is very easy to understand even for people without analytical background. No requirment of statistical knowledge to read and interpret them. Its graphical representation is very intuitive and users can easily relate their hypothesis.  
 2. Useful in data exploration and variable selection. Decision tree is one of the fastest way to identify most significant variables and relation between two or more variables. With the help of decision tree, we can create new variables/features that has better power to predict target variable.  
 3. Less data cleaning required. It required less data cleaning or preprocessing procedure compared to some other modeling method.  
@@ -44,17 +47,101 @@ Types of decision tree is based on the type of target variable we use.
 5. Data type is not a constraint: It can handle both numerical and categorical variables.  
 6. Non Parametric Method: Decision trees have no assumptions about the space distribution and the classifier structure.  
   
-#### __Disadvantages__  
+### 1.1.4 Disadvantages of tree model  
 1. Over fitting. Over fitting is one of the most practical difficulty for decision tree models. This problem gets solved by setting constraints on model parameters and pruning (discussed in detailed below).  
 2. Not fit for continuous variables: While working with continuous numerical variables, decision tree looses information when it categorizes variables in different categories.  
   
+## 1.2 Tree spliting procedure  
+Tree models follow a *top-down greedy* approach known as recursive binary splitting. We call it as ‘top-down’ because it begins from the top of tree when all the observations are available in a single region and successively splits the predictor space into two new branches. We call it as ‘greedy’ because the algorithm looks for best variable available in the current stage and only cares the current split.Future splits will not be considered even if it lead to a better tree.  
+Generally, we want to increase the purity of a node. When the tree model is analysing an attribute to partition the data at the node, we want that each partition is as homogeneous as possible. This means we would like to see most of the instances in each partition belonging to as few classes as possible and each partition should be as large as possible. There are several ways or measurements we can generate to calculate the purity:
+  
+1. Entropy  
+2. Gini Index  
+3. Reduction in Reduction  
+We will discuss more detail about each measurement and its relative model in the following part.  
+
+The splitting process will continue until all leaves reach to maximum purity, or a user defined stopping criteria is reached. For example, we set the minimum number of a nude to 50, then once a node has less than 50 observations, spliting will stop on this node. Such splitting process results in a fully grown tree until the stopping criteria is reached. However, the fully grown tree is likely to overfit data, leading to poor accuracy. Pruning is one of the technique used tackle overfitting. We’ll learn more about it in a later section.
+  
+  
+# Section 2: Entropy, ID3 & C4.5 algorithm  
+
+## 2.1 Entropy  
+**Entropy**, or **Information Entropy**, is the average rate at which information is produced by a stochastic source of data. The measure of information entropy associated with each possible data value is the negative logarithm of the probability mass function for the value. Generally, entropy refers to disorder or uncertainty. A data set with smaller entropy has greater certainty. Shannon defined the entropy\(\ H \)(Greek capital letter eta) of a discrete random variable $X$ with possible values $\{x_1,...,x_n\}$ and probability distribution function $P(X)$ is:  
+  
+<p align="center">
+$P(X=x_i) = p_i,\ i = 1,2,...,n$  
+</p>  
+  
+The Entropy can be written as:  
+<p align="center">
+$H(X) = - \displaystyle\sum_{i= 1}^{n}p(x_i)log_2p(x_i)$  
+</p>  
+
+When the log base equals to 2, then the corresponding units of entropy are the bits. Nats for base on $e$, and bans for base on 10.In the case of $P(x_i) = 0$ for some $i$, the value of the corresponding summand $0log_b(0) = 0$, which is consistent with the limit:  
+<p align="center">
+$\displaystyle\lim_{p \to0+}plog(p) = 0$
+</p>  
+  
+## 2.2 ID3 Algorithm  
+ID3 is one of the most common decision tree algorithm. It was first introduced in 1986 by John Ross Quinlan and it is acronym of __Iterative Dichotomiser__. It calculates the entropy and information gains of each atrribute to look for the most dominant attribute and put it on the tree as decision node. Thereafter, entropy and gain scores would be calculated again among the other attributes and next most dominant attribute will be picked as decision node. We use following dataset about decisions making on playing tennis ourside or not as an example to illuminate the calculating process of ID3.
+
+```{r }
+library(knitr)
+kable(read.csv("dataset/WeatherForcast.csv"))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 2.2 ID3 Algorithm  
   
   
   
   
+## 2.3 C4.5 Algorithm
   
   
   
-# Section 2: regression Tree
-<a href="#header">Back to top</a>
+  
+# Section 3: Gini index & CART algorithm  
+
+## 3.1 Gini index  
+  
+  
+  
+  
+## 3.2 CART Algorithm  
+
+
+
+
+
+
+
+
+
+
+
+
 
