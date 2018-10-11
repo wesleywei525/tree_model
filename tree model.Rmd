@@ -1,6 +1,8 @@
 ---
 title: "Tree model"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     fig_height: 1
     fig_width: 1
