@@ -438,15 +438,262 @@ When the log base equals to 2, then the corresponding units of entropy are the b
 </p>
 <p>We calcualte the entropy of the target variable first, here is the decision column. Decision has two labels, among 14 obervations, there are 9 yes and 5 no. So the entropy of decision would be:</p>
 <p align="center">
-<span class="math inline">\(Entropy(Decision) = -p(Yes)*log_2p(Yes) - p(No)*log_2p(No)\)</span>
+<span class="math display">\[
+\begin{eqnarray}
+Entropy(Decision) &amp;=&amp; -p(Yes)*log_2p(Yes) - p(No)*log_2p(No)\\
+&amp;=&amp; -9/14*log_2(9/14) - 5/14*log_2(5/14)\\
+&amp;=&amp; 0.940
+\end{eqnarray}
+\]</span>
 </p>
+<p><strong>Gain from variable wind</strong></p>
+<p>Wind variable has two labels: Weak and Strong. The information gain by spliting on wind can be calculated as following:</p>
 <p align="center">
-<span class="math inline">\(Entropy(Decision) = -9/14*log_2(9/14) - 5/14*log_2(5/14) = 0.940\)</span>
+<span class="math display">\[
+\begin{eqnarray}
+Gain(Decision, Wind) &amp;=&amp; Entropy(Decision) - \sum[\ p(Wind)*Entrpy(Decision|Wind)]\\
+&amp;=&amp; Entropy(Decision) - p(Wind = Weak)*Entrpy(Decision|Wind = Weak)\\
+&amp;&amp;-p(Wind = Strong)*Entrpy(Decision|Wind = Strong)
+\end{eqnarray}
+\]</span>
 </p>
-<p><strong>Gain from attribute wind</strong></p>
-</div>
-<div id="id3-algorithm-1" class="section level2">
-<h2>2.2 ID3 Algorithm</h2>
+<p>Following table can help you find the probabilities of decision with each wind label.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>Wind</th>
+<th>Decision</th>
+<th>Day</th>
+<th>Wind</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Weak</td>
+<td>No</td>
+<td>2</td>
+<td>Strong</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Weak</td>
+<td>Yes</td>
+<td>6</td>
+<td>Strong</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Weak</td>
+<td>Yes</td>
+<td>7</td>
+<td>Strong</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Weak</td>
+<td>Yes</td>
+<td>11</td>
+<td>Strong</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Weak</td>
+<td>No</td>
+<td>12</td>
+<td>Strong</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Weak</td>
+<td>Yes</td>
+<td>14</td>
+<td>Strong</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>Weak</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td>Weak</td>
+<td>Yes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+Let’s calculate the entropy for both wind conditions.<br />
+
+<p align="center">
+<p><span class="math display">\[
+\begin{eqnarray}
+Entrpy(Decision|Wind = Weak) &amp;=&amp; -p(Decision = No|Wind = Weak) * log_2p(Decision = No|Wind = Weak)\\
+&amp;&amp;-p(Decision = Yes|Wind = Weak) * log_2p(Decision = Yes|Wind = Weak)\\
+&amp;=&amp; -(2/8) * log_2(2/8) - (6/8) * log_2(6/8)\\
+&amp;=&amp; 0.811
+\end{eqnarray}
+\]</span></p>
+<span class="math display">\[
+\begin{eqnarray}
+Entrpy(Decision|Wind = Strong) &amp;=&amp; -p(Decision = No|Wind = Strong) * log_2p(Decision = No|Wind = Strong)\\
+&amp;&amp;-p(Decision = Yes|Wind = Strong) * log_2p(Decision = Yes|Wind = Strong)\\
+&amp;=&amp; -(3/6) * log_2(3/6) - (3/6) * log_2(3/6)\\
+&amp;=&amp; 1
+\end{eqnarray}
+\]</span>
+</p>
+Using the above outcome and the entropy of decision we get before, the gain from spliting on wind would be:<br />
+
+<p align="center">
+<span class="math display">\[
+\begin{eqnarray}
+Gain(Decision, Wind) &amp;=&amp; Entropy(Decision) - p(Wind = Weak)*Entrpy(Decision|Wind = Weak)\\
+&amp;&amp;-p(Wind = Strong)*Entrpy(Decision|Wind = Strong)\\
+&amp;=&amp; 0.940 - (8/14) * 0.811 - (6/14) * 1\\
+&amp;=&amp; 0.048 
+\end{eqnarray}
+\]</span>
+</p>
+<p><strong>Gain from variable Outlook</strong><br />
+Outlook variable has three labels: Sunny, Rain and Overcast.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>Outlook</th>
+<th>Decision</th>
+<th>Day</th>
+<th>Outlook</th>
+<th>Decision</th>
+<th>Day</th>
+<th>Outlook</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Sunny</td>
+<td>No</td>
+<td>4</td>
+<td>Rain</td>
+<td>Yes</td>
+<td>3</td>
+<td>Overcast</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Sunny</td>
+<td>No</td>
+<td>5</td>
+<td>Rain</td>
+<td>Yes</td>
+<td>7</td>
+<td>Overcast</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Sunny</td>
+<td>No</td>
+<td>6</td>
+<td>Rain</td>
+<td>No</td>
+<td>12</td>
+<td>Overcast</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Sunny</td>
+<td>Yes</td>
+<td>10</td>
+<td>Rain</td>
+<td>Yes</td>
+<td>13</td>
+<td>Overcast</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Sunny</td>
+<td>Yes</td>
+<td>14</td>
+<td>Rain</td>
+<td>No</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Let’s calculate the entropy for each outlook condition.</p>
+<p align="center">
+<p><span class="math display">\[
+\begin{eqnarray}
+Entrpy(Decision|Outlook = Sunny) &amp;=&amp; -p(Decision = No|Outlook = Sunny) * log_2p(Decision = No|Outlook = Sunny)\\
+&amp;&amp;-p(Decision = Yes|Outlook = Sunny) * log_2p(Decision = Outlook|Wind = Sunny)\\
+&amp;=&amp; -(3/5) * log_2(3/5) - (2/5) * log_2(2/5)\\
+&amp;=&amp; 0.971
+\end{eqnarray}
+\]</span> <span class="math inline">\(Entrpy(Decision|Outlook = Rain) =-(2/5) * log_2(2/5) - (3/5) * log_2(3/5)= 0.971\)</span></p>
+<p><span class="math inline">\(Entrpy(Decision|Outlook = Overcast) =-(0/5) * log_2(0/5) - (5/5) * log_2(5/5)= 0\)</span></p>
+Using this results we can get the information gain by spliting on outlook:<br />
+<span class="math display">\[
+\begin{eqnarray}
+Gain(Decision, Outlook) &amp;=&amp; Entropy(Decision)\\
+&amp;&amp;-p(Outlook = Sunny)*Entrpy(Decision|Outlook = Sunny)\\
+&amp;&amp;-p(Outlook = Rain)*Entrpy(Decision|Outlook = Rain)\\
+&amp;&amp;-p(Outlook = Overcast)*Entrpy(Decision|Outlook = Overcast)\\
+&amp;=&amp; 0.940 - (5/14) * 0.971- (5/14) * 0.971 - (4/14) * 0\\
+&amp;=&amp; 0.246 
+\end{eqnarray}
+\]</span>
+</p>
+<p><strong>Gain from other variables</strong><br />
+Apply the same calculation on the other two variables, Temperature and Humidity, and list out the gain of all variabels:</p>
+<ul>
+<li>Gain(Decision, Outlook) = 0.246<br />
+</li>
+<li>Gain(Decision, Temperature) = 0.029<br />
+</li>
+<li>Gain(Decision, Humidity) = 0.151<br />
+</li>
+<li>Gain(Decision, Wind) = 0.048</li>
+</ul>
+<p>As seen, outlook variable on decision produces the highest gain, thus, we select outlook as the root node of the tree.</p>
+<p align="center">
+<img src="data:image/png;base64,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" , width="400px">
+</p>
+<p><strong>Split on overcast outlook</strong><br />
+In the overcast node, all decisions are Yes. So the entropy of this node is 0 which make this node perfect purity and there will be no further spliting on this node.</p>
+<p><strong>Split on sunny outlook</strong><br />
+There are 5 records for sunny outlook, 3 decisions are No and 2 decisions are Yes. So we have</p>
+<p align="center">
+<span class="math inline">\(Entropy(Overlook = Sunny) = -(3/5)*log_2(3/5)-(2/5)*log_2(2/5) = 0.971\)</span>
+</p>
+<p>Then we can calculate the information gain as we did before.</p>
+<ul>
+<li>Gain(Outlook=Sunny|Temperature) = 0.570</li>
+<li>Gain(Outlook=Sunny|Humidity) = 0.971</li>
+<li>Gain(Outlook=Sunny|Wind) = 0.020</li>
+</ul>
+<p>Results shows that we should use Humidity as the spliting variable for sunny outlook node. After spliting on Humidity, both children node reach perfect purity, so the spliting stop.</p>
 </div>
 <div id="c4.5-algorithm" class="section level2">
 <h2>2.3 C4.5 Algorithm</h2>

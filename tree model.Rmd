@@ -1,8 +1,6 @@
 ---
 title: "Tree model"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     fig_height: 1
     fig_width: 1
@@ -10,6 +8,8 @@ output:
     theme: sandstone
     toc: yes
     toc_float: yes
+  pdf_document:
+    toc: yes
 ---
 
 
@@ -113,39 +113,148 @@ $Gain(S, A) = Entropy(S) - \sum[p(S|A)Entropy(S|A)]$
 We calcualte the entropy of the target variable first, here is the decision column. Decision has two labels, among 14 obervations, there are 9 yes and 5 no. So the entropy of decision would be:  
   
 <p align="center">
-$Entropy(Decision) = -p(Yes)*log_2p(Yes) - p(No)*log_2p(No)$  
-</p>
-  
-<p align="center">
-$Entropy(Decision) = -9/14*log_2(9/14) - 5/14*log_2(5/14) = 0.940$
+$$
+\begin{eqnarray}
+Entropy(Decision) &=& -p(Yes)*log_2p(Yes) - p(No)*log_2p(No)\\
+&=& -9/14*log_2(9/14) - 5/14*log_2(5/14)\\
+&=& 0.940
+\end{eqnarray}
+$$
 </p>  
   
-__Gain from attribute wind__  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 2.2 ID3 Algorithm  
+__Gain from variable wind__  
   
+Wind variable has two labels: Weak and Strong. The information gain by spliting on wind can be calculated as following:  
   
+<p align="center">
+$$
+\begin{eqnarray}
+Gain(Decision, Wind) &=& Entropy(Decision) - \sum[\ p(Wind)*Entrpy(Decision|Wind)]\\
+&=& Entropy(Decision) - p(Wind = Weak)*Entrpy(Decision|Wind = Weak)\\
+&&-p(Wind = Strong)*Entrpy(Decision|Wind = Strong)
+\end{eqnarray}
+$$
+</p>  
+Following table can help you find the probabilities of decision with each wind label. 
+  
+Day|Wind|Decision|Day|Wind  |Decision
+---|----|--------|---|------|--------
+1  |Weak|No      |2  |Strong|No
+3  |Weak|Yes     |6  |Strong|No
+4  |Weak|Yes     |7  |Strong|Yes
+5  |Weak|Yes     |11 |Strong|Yes
+8  |Weak|No      |12 |Strong|Yes
+9  |Weak|Yes     |14 |Strong|No
+10 |Weak|Yes     |   |      |
+13 |Weak|Yes     |   |      |
+
+Let's calculate the entropy for both wind conditions.  
+<p align="center">
+$$
+\begin{eqnarray}
+Entrpy(Decision|Wind = Weak) &=& -p(Decision = No|Wind = Weak) * log_2p(Decision = No|Wind = Weak)\\
+&&-p(Decision = Yes|Wind = Weak) * log_2p(Decision = Yes|Wind = Weak)\\
+&=& -(2/8) * log_2(2/8) - (6/8) * log_2(6/8)\\
+&=& 0.811
+\end{eqnarray}
+$$  
+  
+$$
+\begin{eqnarray}
+Entrpy(Decision|Wind = Strong) &=& -p(Decision = No|Wind = Strong) * log_2p(Decision = No|Wind = Strong)\\
+&&-p(Decision = Yes|Wind = Strong) * log_2p(Decision = Yes|Wind = Strong)\\
+&=& -(3/6) * log_2(3/6) - (3/6) * log_2(3/6)\\
+&=& 1
+\end{eqnarray}
+$$  
+</p> 
+Using the above outcome and the entropy of decision we get before, the gain from spliting on wind would be:  
+<p align="center">
+$$
+\begin{eqnarray}
+Gain(Decision, Wind) &=& Entropy(Decision) - p(Wind = Weak)*Entrpy(Decision|Wind = Weak)\\
+&&-p(Wind = Strong)*Entrpy(Decision|Wind = Strong)\\
+&=& 0.940 - (8/14) * 0.811 - (6/14) * 1\\
+&=& 0.048 
+\end{eqnarray}
+$$
+</p> 
+  
+__Gain from variable Outlook__  
+Outlook variable has three labels: Sunny, Rain and Overcast.  
+
+Day|Outlook|Decision|Day|Outlook|Decision|Day|Outlook |Decision
+---|-------|--------|---|-------|--------|---|--------|--------
+1  |Sunny  |No      |4  |Rain   |Yes     |3  |Overcast|Yes
+2  |Sunny  |No      |5  |Rain   |Yes     |7  |Overcast|Yes
+8  |Sunny  |No      |6  |Rain   |No      |12 |Overcast|Yes
+9  |Sunny  |Yes     |10 |Rain   |Yes     |13 |Overcast|Yes
+11 |Sunny  |Yes     |14 |Rain   |No      |   |        |
+  
+Let's calculate the entropy for each outlook condition. 
+  
+<p align="center">
+$$
+\begin{eqnarray}
+Entrpy(Decision|Outlook = Sunny) &=& -p(Decision = No|Outlook = Sunny) * log_2p(Decision = No|Outlook = Sunny)\\
+&&-p(Decision = Yes|Outlook = Sunny) * log_2p(Decision = Outlook|Wind = Sunny)\\
+&=& -(3/5) * log_2(3/5) - (2/5) * log_2(2/5)\\
+&=& 0.971
+\end{eqnarray}
+$$
+$Entrpy(Decision|Outlook = Rain) =-(2/5) * log_2(2/5) - (3/5) * log_2(3/5)= 0.971$  
+  
+$Entrpy(Decision|Outlook = Overcast) =-(0/5) * log_2(0/5) - (5/5) * log_2(5/5)= 0$  
+  
+Using this results we can get the information gain by spliting on outlook:  
+$$
+\begin{eqnarray}
+Gain(Decision, Outlook) &=& Entropy(Decision)\\
+&&-p(Outlook = Sunny)*Entrpy(Decision|Outlook = Sunny)\\
+&&-p(Outlook = Rain)*Entrpy(Decision|Outlook = Rain)\\
+&&-p(Outlook = Overcast)*Entrpy(Decision|Outlook = Overcast)\\
+&=& 0.940 - (5/14) * 0.971- (5/14) * 0.971 - (4/14) * 0\\
+&=& 0.246 
+\end{eqnarray}
+$$
+</p>  
+
+__Gain from other variables__  
+Apply the same calculation on the other two variables, Temperature and Humidity, and list out the gain of all variabels:  
+  
+ * Gain(Decision, Outlook) = 0.246  
+ * Gain(Decision, Temperature) = 0.029  
+ * Gain(Decision, Humidity) = 0.151  
+ * Gain(Decision, Wind) = 0.048  
+  
+As seen, outlook variable on decision produces the highest gain, thus, we select outlook as the root node of the tree.  
+
+<p align="center">
+<img src="img/tree-outlook.png", width=400px> 
+</p>
+  
+__Split on overcast outlook__  
+In the overcast node, all decisions are Yes. So the entropy of this node is 0 which make this node perfect purity and there will be no further spliting on this node.
+  
+__Split on sunny outlook__  
+There are 5 records for sunny outlook, 3 decisions are No and 2 decisions are Yes. So we have  
+
+<p align="center">
+$Entropy(Overlook = Sunny) = -(3/5)*log_2(3/5)-(2/5)*log_2(2/5) = 0.971$  
+</p>
+
+Then we can calculate the information gain as we did before.
+
+ * Gain(Outlook=Sunny|Temperature) = 0.570
+ * Gain(Outlook=Sunny|Humidity) = 0.971
+ * Gain(Outlook=Sunny|Wind) = 0.020  
+  
+Results show that we should use Humidity as the spliting variable for sunny outlook node. After spliting on Humidity, both children node reach perfect purity, so the spliting stop.
+
+
+
+
+
   
   
 ## 2.3 C4.5 Algorithm
