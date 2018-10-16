@@ -433,35 +433,26 @@ $$
   
 Following table list the result for all the threshold,  
   
-Threshold|Gain |GainRatio
----------|-----|---------
-67.5     |0.048|0.129
-72.5     |0.015|0.017
-76.5     |0.045|0.048
-79       |0.090|0.092
-82.5     |0.102|0.109
-87.5     |0.025|0.029
-92.5     |0.010|0.017
-95.5     |0.048|0.129
+Threshold|Gain |GainRatio| |Threshold|Gain |GainRatio
+---------|-----|---------|-|---------|-----|---------
+67.5     |0.048|0.129    | |82.5     |0.102|0.109
+72.5     |0.015|0.017    | |87.5     |0.025|0.029
+76.5     |0.045|0.048    | |92.5     |0.010|0.017
+79       |0.090|0.092    | |95.5     |0.048|0.129
   
 We will use the 67.5 as the threshold for Humidity and have GainRatio 0.129.  
   
 <font size=4> __Gain ratio for Temperature variable__ </font>  
 Applying same calculation on Temperature and we receive following gain and gain ratio table
   
-Threshold|Gain |GainRatio
----------|-----|---------
-64.5     |0.048|0.129
-66.5     |0.01 |0.017
-68.5     |0    |0
-69.5     |0.015|0.017
-70.5     |0.045|0.048
-71.5     |0.001|0.001
-73.5     |0.001|0.001
-77.5     |0.025|0.029
-80.5     |0    |0
-82       |0.01 |0.017
-84       |0.113|0.305
+Threshold|Gain |GainRatio|||Threshold|Gain |GainRatio
+---------|-----|---------|-|---------|-----|---------
+64.5     |0.048|0.129    |||73.5     |0.001|0.001
+66.5     |0.01 |0.017    |||77.5     |0.025|0.029
+68.5     |0    |0        |||80.5     |0    |0
+69.5     |0.015|0.017    |||82       |0.01 |0.017
+70.5     |0.045|0.048    |||84       |0.113|0.305
+71.5     |0.001|0.001    |||
 
 So for Temperature, we will use 84 as the threshold with GainRatio 0.305.  
 From the result we can see that highest Gain Ratio is spliting on Temperature using 84 as the threshold, so we pick that for the rood node and have our base tree
@@ -472,7 +463,7 @@ From the result we can see that highest Gain Ratio is spliting on Temperature us
  * GainRatio(Decision, Temperature) = 0.305  
   
 <p align="center">
-<img src="img/C4.5-root-node.png", width=300px> 
+<img src="img/C4.5-root-node.PNG", width=300px> 
 </p>  
   
   
