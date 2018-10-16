@@ -445,14 +445,14 @@ We will use the 67.5 as the threshold for Humidity and have GainRatio 0.129.
 <font size=4> __Gain ratio for Temperature variable__ </font>  
 Applying same calculation on Temperature and we receive following gain and gain ratio table
   
-Threshold|Gain |GainRatio|||Threshold|Gain |GainRatio
+Threshold|Gain |GainRatio| |Threshold|Gain |GainRatio
 ---------|-----|---------|-|---------|-----|---------
-64.5     |0.048|0.129    |||73.5     |0.001|0.001
-66.5     |0.01 |0.017    |||77.5     |0.025|0.029
-68.5     |0    |0        |||80.5     |0    |0
-69.5     |0.015|0.017    |||82       |0.01 |0.017
-70.5     |0.045|0.048    |||84       |0.113|0.305
-71.5     |0.001|0.001    |||
+64.5     |0.048|0.129    | |73.5     |0.001|0.001
+66.5     |0.01 |0.017    | |77.5     |0.025|0.029
+68.5     |0    |0        | |80.5     |0    |0
+69.5     |0.015|0.017    | |82       |0.01 |0.017
+70.5     |0.045|0.048    | |84       |0.113|0.305
+71.5     |0.001|0.001    | |
 
 So for Temperature, we will use 84 as the threshold with GainRatio 0.305.  
 From the result we can see that highest Gain Ratio is spliting on Temperature using 84 as the threshold, so we pick that for the rood node and have our base tree
