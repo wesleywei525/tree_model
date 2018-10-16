@@ -300,12 +300,13 @@ The Entropy can be written as:<br />
 When the log base equals to 2, then the corresponding units of entropy are the bits. Nats for base on <span class="math inline">\(e\)</span>, and bans for base on 10.In the case of <span class="math inline">\(P(x_i) = 0\)</span> for some <span class="math inline">\(i\)</span>, the value of the corresponding summand <span class="math inline">\(0log_b(0) = 0\)</span>, which is consistent with the limit:<br />
 
 <p align="center">
-<span class="math inline">\(\displaystyle\lim_{p \to0+}plog(p) = 0\)</span>
+<span class="math inline">\(\displaystyle\lim_{p \to0+}p\cdot log(p) = 0\)</span>
 </p>
 </div>
-<div id="id3-algorithm" class="section level2">
-<h2>2.2 ID3 Algorithm</h2>
-<p>ID3 is one of the most common decision tree algorithm. It was first introduced in 1986 by John Ross Quinlan and it is acronym of <strong>Iterative Dichotomiser</strong>. It calculates the entropy and information gains of each atrribute to look for the most dominant attribute and put it on the tree as decision node. Thereafter, entropy and gain scores would be calculated again among the other attributes and next most dominant attribute will be picked as decision node. We use following dataset about decisions making on playing tennis ourside or not as an example to illuminate the calculating process of ID3.</p>
+<div id="id3-algorithm-and-information-gain" class="section level2">
+<h2>2.2 ID3 Algorithm and Information Gain</h2>
+<p>ID3 is one of the original decision tree algorithm first introduced in 1986 by John Ross Quinlan. ID3 is acronym of <strong>Iterative Dichotomiser</strong>. It calculates the entropy and information gains of each atrribute to look for the most dominant attribute and put it on the tree as decision node. Thereafter, entropy and gain scores would be calculated again among the other attributes and next most dominant attribute will be picked as decision node.<br />
+We use following dataset about decisions making on playing tennis ourside or not as an example to illuminate the calculating process of ID3.</p>
 <table>
 <thead>
 <tr class="header">
@@ -434,7 +435,7 @@ When the log base equals to 2, then the corresponding units of entropy are the b
 </table>
 <p>Information gain is calculated as:</p>
 <p align="center">
-<span class="math inline">\(Gain(S, A) = Entropy(S) - \sum[p(S|A)Entropy(S|A)]\)</span>
+<span class="math inline">\(Gain(D, V) = Entropy(D) - \sum[p(D|V)Entropy(D|V)]\)</span>
 </p>
 <p>We calcualte the entropy of the target variable first, here is the decision column. Decision has two labels, among 14 obervations, there are 9 yes and 5 no. So the entropy of decision would be:</p>
 <p align="center">
@@ -446,7 +447,9 @@ Entropy(Decision) &amp;=&amp; -p(Yes)*log_2p(Yes) - p(No)*log_2p(No)\\
 \end{eqnarray}
 \]</span>
 </p>
-<p><strong>Gain from variable wind</strong></p>
+<div id="variable-selection-for-root-node" class="section level3">
+<h3>2.2.1 Variable selection for root node</h3>
+<p><font size="4"> <strong>Gain from variable wind</strong> </font></p>
 <p>Wind variable has two labels: Weak and Strong. The information gain by spliting on wind can be calculated as following:</p>
 <p align="center">
 <span class="math display">\[
@@ -568,7 +571,7 @@ Gain(Decision, Wind) &amp;=&amp; Entropy(Decision) - p(Wind = Weak)*Entrpy(Decis
 \end{eqnarray}
 \]</span>
 </p>
-<p><strong>Gain from variable Outlook</strong><br />
+<p><font size="4"> <strong>Gain from variable Outlook</strong> </font><br />
 Outlook variable has three labels: Sunny, Rain and Overcast.</p>
 <table>
 <thead>
@@ -652,7 +655,7 @@ Entrpy(Decision|Outlook = Sunny) &amp;=&amp; -p(Decision = No|Outlook = Sunny) *
 &amp;=&amp; 0.971
 \end{eqnarray}
 \]</span> <span class="math inline">\(Entrpy(Decision|Outlook = Rain) =-(2/5) * log_2(2/5) - (3/5) * log_2(3/5)= 0.971\)</span></p>
-<p><span class="math inline">\(Entrpy(Decision|Outlook = Overcast) =-(0/5) * log_2(0/5) - (5/5) * log_2(5/5)= 0\)</span></p>
+<p><span class="math inline">\(Entrpy(Decision|Outlook = Overcast) =-(0/5) * log_2(0/5) - (4/4) * log_2(4/4)= 0\)</span></p>
 Using this results we can get the information gain by spliting on outlook:<br />
 <span class="math display">\[
 \begin{eqnarray}
@@ -665,7 +668,7 @@ Gain(Decision, Outlook) &amp;=&amp; Entropy(Decision)\\
 \end{eqnarray}
 \]</span>
 </p>
-<p><strong>Gain from other variables</strong><br />
+<p><font size="4"> <strong>Gain from other variables</strong> </font><br />
 Apply the same calculation on the other two variables, Temperature and Humidity, and list out the gain of all variabels:</p>
 <ul>
 <li>Gain(Decision, Outlook) = 0.246<br />
@@ -680,10 +683,113 @@ Apply the same calculation on the other two variables, Temperature and Humidity,
 <p align="center">
 <img src="data:image/png;base64,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" , width="400px">
 </p>
-<p><strong>Split on overcast outlook</strong><br />
-In the overcast node, all decisions are Yes. So the entropy of this node is 0 which make this node perfect purity and there will be no further spliting on this node.</p>
-<p><strong>Split on sunny outlook</strong><br />
-There are 5 records for sunny outlook, 3 decisions are No and 2 decisions are Yes. So we have</p>
+</div>
+<div id="variable-selection-for-decision-nodes" class="section level3">
+<h3>2.2.2 Variable selection for decision nodes</h3>
+<p><font size="4"> <strong>Split on overcast outlook</strong> </font></p>
+<table>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>Outlook</th>
+<th>Temperature</th>
+<th>Humidity</th>
+<th>Wind</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3</td>
+<td>Overcast</td>
+<td>Hot</td>
+<td>High</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>Overcast</td>
+<td>Cool</td>
+<td>Normal</td>
+<td>Strong</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td>Overcast</td>
+<td>Mild</td>
+<td>High</td>
+<td>Strong</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td>Overcast</td>
+<td>Hot</td>
+<td>Normal</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>After choosing the root node, we continue the same process on the new decision nodes. In the overcast node, all decisions are Yes. So the entropy of this node is 0 which make this node perfect purity and there will be no further spliting on this node.</p>
+<p><font size="4"> <strong>Split on sunny outlook</strong> </font></p>
+<table>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>Outlook</th>
+<th>Temperature</th>
+<th>Humidity</th>
+<th>Wind</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Sunny</td>
+<td>Hot</td>
+<td>High</td>
+<td>Weak</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Sunny</td>
+<td>Hot</td>
+<td>High</td>
+<td>Strong</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Sunny</td>
+<td>Mild</td>
+<td>High</td>
+<td>Weak</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Sunny</td>
+<td>Cool</td>
+<td>Normal</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Sunny</td>
+<td>Mild</td>
+<td>Normal</td>
+<td>Strong</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>There are 5 records for sunny outlook, 3 decisions are No and 2 decisions are Yes. So we have</p>
 <p align="center">
 <span class="math inline">\(Entropy(Overlook = Sunny) = -(3/5)*log_2(3/5)-(2/5)*log_2(2/5) = 0.971\)</span>
 </p>
@@ -693,10 +799,503 @@ There are 5 records for sunny outlook, 3 decisions are No and 2 decisions are Ye
 <li>Gain(Outlook=Sunny|Humidity) = 0.971</li>
 <li>Gain(Outlook=Sunny|Wind) = 0.020</li>
 </ul>
-<p>Results shows that we should use Humidity as the spliting variable for sunny outlook node. After spliting on Humidity, both children node reach perfect purity, so the spliting stop.</p>
+<p>Result shows that Humidity produce the highest gain so we use it as the spliting variable for sunny outlook node. After spliting on Humidity, both children nodes reach perfect purity, then the spliting stop.</p>
+<p><font size="4"> <strong>Split on rain outlook</strong> </font></p>
+<table>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>Outlook</th>
+<th>Temperature</th>
+<th>Humidity</th>
+<th>Wind</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td>Rain</td>
+<td>Mild</td>
+<td>High</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>Rain</td>
+<td>Cool</td>
+<td>Normal</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Rain</td>
+<td>Cool</td>
+<td>Normal</td>
+<td>Strong</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Rain</td>
+<td>Mild</td>
+<td>Normal</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td>Rain</td>
+<td>Mild</td>
+<td>High</td>
+<td>Strong</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>For rain outlook node, we can generate following score to select the next node.</p>
+<ul>
+<li>Entropy(Overlook = Rain) = 0.971<br />
+</li>
+<li>Gain(Outlook=Rain|Temperature) = 0.02<br />
+</li>
+<li>Gain(Outlook=Rain|Humidity) = 0.02<br />
+</li>
+<li>Gain(Outlook=Rain|Wind) = 0.971<br />
+So we will use wind variable to split the rain outlook node.</li>
+</ul>
+<p>Finially, all terminal nodes reach to perfect purity, so the algorithm stop and we have following decision tree</p>
+<p align="center">
+<img src="data:image/png;base64,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" , width="400px">
+</p>
+<p>ID3 algorithm is using the information gain as its spliding index, however its limitation is that this algorithm will tend to choice variable with more options which will make the tree wide but not deep enough. Also ID3 cannot deal with countious data or missing data. So it comes C4.5, which is a evolved version using gain ratio as the index. Detail discuession is in next section.</p>
 </div>
-<div id="c4.5-algorithm" class="section level2">
-<h2>2.3 C4.5 Algorithm</h2>
+</div>
+<div id="c4.5-algorithm-and-information-gain-ratio" class="section level2">
+<h2>2.3 C4.5 Algorithm and Information Gain Ratio</h2>
+<p><strong>C4.5</strong> is an algorithm used to generate a decision tree developed by Ross Quinlan. C4.5 is an extension of Quinlan’s earlier ID3 algorithm. In general, C4.5 grows decision trees from a dataset in the same way as ID3, however in stead of using information gain as the spliting index, C4.5 use information gain ratio. With this improvement, C4.5 algorithm can create a more generalized models including continuous data and could handle missing data.<br />
+Gain ratio is defined as follows:</p>
+<p align="center">
+<span class="math inline">\(GainRatio(D,V) = \frac{Gain(D,V)}{SplitInfo(V)}\)</span><br />
+<span class="math inline">\(SplitInfo(V) = \displaystyle-\sum_{i=1}^{n}[p(v_i)\cdot log_2p(v_i)]\)</span>
+</p>
+<p>Here <span class="math inline">\(p(v_i)\)</span> is the proportion of element <span class="math inline">\(v_i\)</span> in variable set V.<br />
+We are going to create a decision tree for the similar dataset we used in last section, decision making on playing tennis outside. The difference is that temperature and humidity columns are having continuous values instead of nominal ones.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>Outlook</th>
+<th>Temperature</th>
+<th>Humidity</th>
+<th>Wind</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Sunny</td>
+<td>85</td>
+<td>85</td>
+<td>Weak</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Sunny</td>
+<td>80</td>
+<td>90</td>
+<td>Strong</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Overcast</td>
+<td>83</td>
+<td>78</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Rain</td>
+<td>70</td>
+<td>96</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Rain</td>
+<td>68</td>
+<td>80</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Rain</td>
+<td>65</td>
+<td>70</td>
+<td>Strong</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Overcast</td>
+<td>64</td>
+<td>65</td>
+<td>Strong</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Sunny</td>
+<td>72</td>
+<td>95</td>
+<td>Weak</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Sunny</td>
+<td>69</td>
+<td>70</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Rain</td>
+<td>75</td>
+<td>80</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Sunny</td>
+<td>75</td>
+<td>70</td>
+<td>Strong</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Overcast</td>
+<td>72</td>
+<td>90</td>
+<td>Strong</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Overcast</td>
+<td>81</td>
+<td>75</td>
+<td>Weak</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>Rain</td>
+<td>71</td>
+<td>80</td>
+<td>Strong</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>First let’s calculate the entropy of the target variable Decision:</p>
+<p align="center">
+<span class="math display">\[
+\begin{eqnarray}
+Entropy(Decision) &amp;=&amp; -p(Yes)*log_2p(Yes) - p(No)*log_2p(No)\\
+&amp;=&amp; -9/14*log_2(9/14) - 5/14*log_2(5/14)\\
+&amp;=&amp; 0.940
+\end{eqnarray}
+\]</span>
+</p>
+<div id="variable-selection-for-root-node-1" class="section level3">
+<h3>2.3.1 Variable selection for root node</h3>
+<p><font size="4"> <strong>Gain ratio for Wind variable</strong> </font><br />
+Wind is a nominal variable with possible value weak and strong. First we get the Information gain in the same way we did in last section.</p>
+<p align="center">
+<span class="math display">\[
+\begin{eqnarray}
+Entrpy(Decision|Wind = Weak) &amp;=&amp; -(2/8) * log_2(2/8) - (6/8) * log_2(6/8) = 0.811\\
+Entrpy(Decision|Wind = Strong) &amp;=&amp;-(3/6) * log_2(3/6) - (3/6) * log_2(3/6) = 1\\
+Gain(Decision, Wind) &amp;=&amp; 0.940 - (8/14) * 0.811 - (6/14) * 1 = 0.048
+\end{eqnarray}
+\]</span>
+</p>
+Among all 14 records of wind, there are 8 weak wind and 6 strong wind, so the SplitInfo and GainRatio is:<br />
+
+<p align="center">
+<span class="math display">\[
+\begin{eqnarray}
+SplitInfo(Wind) &amp;=&amp; -(8/14)*log_2(8/14) – (6/14)*log_2(6/14) = 0.461 + 0.524 = 0.985\\
+GainRatio(Decision, Wind) &amp;=&amp; Gain(Decision, Wind) / SplitInfo(Wind) = 0.048/ 0.985 = 0.049
+\end{eqnarray}
+\]</span>
+</p>
+<p><font size="4"> <strong>Gain ratio for Outlook variable</strong> </font><br />
+Outlook is also a nominal variable with possible value Sunny, Rain and Overcast.</p>
+<p align="center">
+<span class="math display">\[
+\begin{eqnarray}
+Entrpy(Decision|Outlook = Sunny) &amp;=&amp; -(3/5) * log_2(3/5) - (2/5) * log_2(2/5) = 0.971 \\
+Entrpy(Decision|Outlook = Rain) &amp;=&amp; -(2/5) * log_2(2/5) - (3/5) * log_2(3/5)= 0.971 \\
+Entrpy(Decision|Outlook = Overcast) &amp;=&amp; -(0/5) * log_2(0/4) - (4/4) * log_2(5/5)= 0 \\
+Gain(Decision, Outlook) &amp;=&amp; 0.940 - (5/14) * 0.971- (5/14) * 0.971 - (4/14) * 0 = 0.246 
+\end{eqnarray}
+\]</span>
+</p>
+And for the outlook variable, there are 5 Sunny, 5 Rain and 4 Overcast, so the SplitInfo and GainRatio is:<br />
+
+<p align="center">
+<span class="math display">\[
+\begin{eqnarray}
+SplitInfo(Wind) &amp;=&amp; -(5/14)*log_2(5/14) – (5/14)*log_2(5/14) – (4/14)*log_2(4/14) = 1.577\\
+GainRatio(Decision, Outlook) &amp;=&amp; Gain(Decision, Outlook) / SplitInfo(Outlook) = 0.246 / 1.577 = 0.156
+\end{eqnarray}
+\]</span>
+</p>
+<p><font size="4"> <strong>Gain ratio for Humidity variable</strong> </font></p>
+<p>In this dataset, Humidity is a continuous variable. We will sort them first and find a threshold value to create a binary split which provide the highest gain ratio.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>Humidity</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>7</td>
+<td>65</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>70</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>70</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>70</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>75</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>78</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>80</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>80</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td>80</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>85</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>90</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>90</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>95</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>96</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s first set the threshold between 65 and 70, use 67.5 as the cut point.</p>
+<p align="center">
+<span class="math display">\[
+\begin{eqnarray}
+Entrpy(Decision|Humidity &lt;= 67.5) &amp;=&amp; – p(No|&lt;=67.5)*log_2p(No|&lt;=67.5) – p(Yes|&lt;=67.5)*log_2p(Yes|&lt;=67.5) \\
+&amp;=&amp; -(0/1) * log_2(0/1) - (1/1) * log_2(1/1) = 0\\
+Entrpy(Decision|Humidity &gt; 67.5) &amp;=&amp;-(5/13) * log_2(5/13) - (8/13) * log_2(8/13) = 0.961 \\
+Gain(Decision, Humidity_{(67.5)}) &amp;=&amp; 0.940 - (1/14) * 0 - (13/14) * 0.961 = 0.048 \\
+SplitInfo(Humidity_{(67.5)}) &amp;=&amp; -(1/14)*log_2(1/14) - (13/14)*log_2(13/14) = 0.371 \\
+GainRatio(Decision, Humidity) &amp;=&amp; 0.048/0.371 = 0.129
+\end{eqnarray}
+\]</span>
+</p>
+<p>Following table list the result for all the threshold,</p>
+<table>
+<thead>
+<tr class="header">
+<th>Threshold</th>
+<th>Gain</th>
+<th>GainRatio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>67.5</td>
+<td>0.048</td>
+<td>0.129</td>
+</tr>
+<tr class="even">
+<td>72.5</td>
+<td>0.015</td>
+<td>0.017</td>
+</tr>
+<tr class="odd">
+<td>76.5</td>
+<td>0.045</td>
+<td>0.048</td>
+</tr>
+<tr class="even">
+<td>79</td>
+<td>0.090</td>
+<td>0.092</td>
+</tr>
+<tr class="odd">
+<td>82.5</td>
+<td>0.102</td>
+<td>0.109</td>
+</tr>
+<tr class="even">
+<td>87.5</td>
+<td>0.025</td>
+<td>0.029</td>
+</tr>
+<tr class="odd">
+<td>92.5</td>
+<td>0.010</td>
+<td>0.017</td>
+</tr>
+<tr class="even">
+<td>95.5</td>
+<td>0.048</td>
+<td>0.129</td>
+</tr>
+</tbody>
+</table>
+<p>We will use the 67.5 as the threshold for Humidity and have GainRatio 0.129.</p>
+<p><font size="4"> <strong>Gain ratio for Temperature variable</strong> </font><br />
+Applying same calculation on Temperature and we receive following gain and gain ratio table</p>
+<table>
+<thead>
+<tr class="header">
+<th>Threshold</th>
+<th>Gain</th>
+<th>GainRatio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>64.5</td>
+<td>0.048</td>
+<td>0.129</td>
+</tr>
+<tr class="even">
+<td>66.5</td>
+<td>0.01</td>
+<td>0.017</td>
+</tr>
+<tr class="odd">
+<td>68.5</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>69.5</td>
+<td>0.015</td>
+<td>0.017</td>
+</tr>
+<tr class="odd">
+<td>70.5</td>
+<td>0.045</td>
+<td>0.048</td>
+</tr>
+<tr class="even">
+<td>71.5</td>
+<td>0.001</td>
+<td>0.001</td>
+</tr>
+<tr class="odd">
+<td>73.5</td>
+<td>0.001</td>
+<td>0.001</td>
+</tr>
+<tr class="even">
+<td>77.5</td>
+<td>0.025</td>
+<td>0.029</td>
+</tr>
+<tr class="odd">
+<td>80.5</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>82</td>
+<td>0.01</td>
+<td>0.017</td>
+</tr>
+<tr class="odd">
+<td>84</td>
+<td>0.113</td>
+<td>0.305</td>
+</tr>
+</tbody>
+</table>
+<p>So for Temperature, we will use 84 as the threshold with GainRatio 0.305.<br />
+From the result we can see that highest Gain Ratio is spliting on Temperature using 84 as the threshold, so we pick that for the rood node and have our base tree</p>
+<ul>
+<li>GainRatio(Decision, Wind) = 0.049<br />
+</li>
+<li>GainRatio(Decision, Outlook) = 0.156<br />
+</li>
+<li>GainRatio(Decision, Humidity) = 0.129<br />
+</li>
+<li>GainRatio(Decision, Temperature) = 0.305</li>
+</ul>
+<p align="center">
+<img src="data:image/png;base64,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UIjACajA17/+9bB58+bwi1/8otmCqbjjjjvCqaeeGq644opw9913N1sBjBWBEzBSf/zjH8O73vWu8OQnP/nA//31oQ99qNmLqdA19vU97LDDwjnnnBNuuummZi+AsSFwAkZGd5fe9KY3hYc85CEHFlQnbcO0HHPMMQddZyVtV1ClO1IAxoPACRgB3V369Kc/fY+7S3FSwKRF9Ac/+EFTAlOhj18vvvjicNxxx2WvvdLJJ58cLr/88nDXXXc1pQCsFwInYB113V1Ses5znrPy8ZwCK0zfLbfcEs4777xw+OGHZ/vDoYceGs4888xwww03NCUALBqBE7BgCoIUMHXdXTr77LO5u7TkrrzyypV/EJDrI0pHHXVUuPDCC8Ntt93WlACwCAROwILoIxnuLmFWd955Z7jkkkvCCSeckO03SieeeGK49NJLw759+5pSANYKgROwhuK7S7mASdsUMHF3CSVuvfXWcMEFF4QjjzzyoL7kdPrpp4err766KQFgaAROwBpQwJQ+SiBOj370o1f281wmzOvaa68NW7ZsyfYvpSOOOCKcf/75Yffu3U0JAEMgcAIGpLtL+n5S190l5eHjOAxl//794bLLLgsnnXTSQX3O6WlPe1r4wAc+EH772982pQDMi8AJWKW+u0sKmHiUABbh9ttvD9u2bQtHH310ti8qveQlLwk7d+5sSgCYFYETMCceJYAxu/HGG8NZZ50V7nvf+2b754YNG8LWrVvDt771raYEgBIETsAMFATxoErU5K9//Wv45Cc/GZ73vOdl+6zSscceGy666KKwd+/ephSANgROQAHuLmEKfvrTn4Z3v/vd4fGPf3y2Hytt2rQpfOYznwn/+Mc/mlIAYgROQAsFQX6UQG6BURDFgypRK/Xt1772teFBD3pQtn8/4AEPCK95zWvCV7/61aYEACFwAhJ6RIA+btMjA3ILCneXMCX/+te/wuc+97nwwhe+MNvflR772MeGd77zneHHP/5xUwpYXgROwP/47pKCotzHcdqmfdxdwpT96le/Cu973/ta77IqPfvZzw47duwIf/7zn5tSwHIhcMJSU8DU9SgBHlSJZfWd73wnvOENbwgPe9jDsmPj3ve+d3jlK18ZvvSlLzUlgOVA4ISlVPJl72uuuYaP44D/ueqqq8Jpp52WHStKj3rUo8Jb3/rW8P3vf78pAUwXgROWhoIgfTeJRwkA8/n9738fPvzhD4dnPOMZ2TGk9MxnPjN85CMfWckLTBGBEyaPRwkAw9Pdpbe85S3hkY98ZHZcKb3sZS8LX/jCF5oSwDQQOGGSFATpozYeJQCsveuvvz6cccYZ4V73uld2vD384Q8Pb3zjG8N3v/vdpgRQLwInTIoCIe4uAevjT3/6U/j4xz++8i/vcuNP6SlPeUrYvn17+PWvf92UAupC4ITqKQjygypzAZO28SgBYLF+9KMfhXe84x1h48aNB41Jpxe96EUrz5D697//3ZQCxo/ACdVSwNT1oEpt5+4SsP6+8pWvhFe/+tXh/ve/f3asPvjBDw7nnntu+MY3vtGUAMaLwAnV0d2lzZs3995dImACxuXvf//7yn+Sfcoppxw0dp2e8IQnhPe85z3hZz/7WVMKGBcCJ1TBd5f6HiXAgyqBOvz85z8PF110UXjiE5+YHdNKz3/+88OnPvWp8Le//a0pBaw/AieMWsmjBPQOlrtLQL2++c1vhte97nWt4/x+97tfOOuss8KXv/zlpgSwfgicMDoKghQM8aBKYPl8/vOfDy9+8YuzY1/pMY95THj7298efvjDHzYlgMUicMJo8KBKAPab3/wmvP/97w9PfepTs/OB0rOe9azwsY99LOzfv78pBaw9AiesKwVBfpRAbmJUEMWDKoHltnv37pU3VY94xCOy84TSK17xinDdddc1JYC1Q+CEdaEvcevjNu4uAZjFF7/4xfDyl788O28oHXnkkeHNb35z+N73vteUAIZF4ISF8d0lBUW5gEnb/CgBAOjyhz/8IXz0ox8NJ5544kFzidPTn/708MEPfjD87ne/a0oBq0fghDWngKnrUQJ6UCWPEgAwrz179oS3ve1t4aijjsrOMUovfelLw5VXXtmUAOZH4IQ10/Vlb99dUh4+jgMwlF27doVXvepV4T73uc9B847SQx/60PD6178+fPvb325KALMhcMKg+u4uKWDiUQIA1tpf/vKX8IlPfCI897nPzc5FSk960pPCe9/73vDLX/6yKQX0I3DCIHiUAICx+slPfrLyhu1xj3tcdn5SOvXUU8MVV1wR7r777qYUkEfghLkpCOp7UKWCKe4uARiLr33ta+Gcc84JD3zgA7Pz1mGHHbay/6abbmpKAPdE4ISZcXcJQO3++c9/hs9+9rPhBS94QXYeUzrmmGNW7lTdcccdTSmAwAmFFAQpYOq6u7R582buLgGojv5F78UXXxyOO+647PymdPLJJ4fLL7883HXXXU0pLCsCJ3Tygyr1yIDcZKJAirtLAKbilltuCeedd144/PDDs3PeoYceGs4888xwww03NCWwbAiccBDfXdIdpNzHcdrmB1USMAGYKj33SfNgOgc66blRF154YbjtttuaElgGBE44QEFQyaMEeFAlgGVy5513hksuuSSccMIJ2blRSU8wv/TSS8O+ffuaUpgqAicUfdn7mmuu4e4SgKV36623hgsuuGDl/8TLzZdKp59+erj66qubEpgaAqclpSCo71ECurvEl70BIO/aa68NW7Zsyc6hSkcccUQ4//zzw+7du5sSmAICpyXDowQAYFj79+8Pl112WTjppJOy8+opp5zS5MQUEDgtAQVBfY8SOPvss7m7BACrdPvtt4dt27aFo48++sAcq7v7mA4CpwnTl7i5uwQA6+PGG28M5557bvjPf/7TbMEUEDhNWO4Ok4IoP0oAAADMhsBpwnQ3yQGTHmCpL3tzdwkAgPkROE2YgiTdXdL3mwiYAABYPQInAACAQgROAAAAhQicAAAAChE4AQAAFCJwAgAAKETgBAAAUIjACQAAoBCBEwAAQCECJwAAgEIETgAAAIUInAAAAAqta+AU/6/9fenmm29uSgFra9++fWHr1q1h48aNB/qfft++ffvKvj5btmw5UG7Pnj3NVgDAFKxr4LRp06Z7JC9U+pnuYwGaj9pNbarFHP327t0bNmzYsNJm6ncKlrZt23agbx5//PFNzrxdu3at5HMi4AeAaRnVR3VapLTY6CeGoYVbbaogAP0UJOX6oO40OXhqC4acR0kBFoETAEwPgdPETTFwUoCiPqI7Q0NTO7UFPA6qduzY0Wy5J/ffnTt3dh4HWDT3x5LE/It5LcvXHKoNnJTH7+qV9Ls+JklpkdN+LWBKLqNFVxfYF1Nl4325OvhjLx3THcQf66hzaMHMyXUmdZBcx3DHES/UOkf82vRxUu546SLtfWmKgyi3eS4Y0PG0L20L1UfH0OvyhKy6qF6x0mtUSufTMd3m+jk0t3/u+vu15K6bP+Jz27pdCJwwBppL1Ced4rku3q7UNo+hn9pzLealGizT1xyqDJw86PUzvThpWR9TgYZ+eqLQ70r63ft0jHifjhtzIKHFNe4gro9S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" , width="500px">
+</p>
+</div>
 </div>
 </div>
 <div id="section-3-gini-index-cart-algorithm" class="section level1">
