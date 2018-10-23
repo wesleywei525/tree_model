@@ -463,16 +463,36 @@ From the result we can see that highest Gain Ratio is spliting on Temperature us
  * GainRatio(Decision, Temperature) = 0.305  
   
 <p align="center">
-<img src="img/C4.5-root-node.PNG", width=300px> 
+<img src="img/C4.5-root-node.PNG", width=350px> 
+</p>  
+  
+### 2.2.2 Variable selection for decision nodes  
+First let's calculate the entropy of the dataset fall into left node   
+$Entropy(Temp<=84) = -4/13*log_2(4/13) - 9/13*log_2(9/13) = 0.89$  
+And using the same method we can get gain ratio for spliting with each variable  
+
+Split            |Gain |GainRatio
+-----------------|-----|---------
+Outlook          |0.209|0.132
+Temperature<=80.5|0.09 |0.031
+Humidity<=79	   |0.059|0.03
+Wind             |0.11 |0.11
+
+So this time we use Outlook as the spliting variable and the tree grows into this
+  
+<p align="center">
+<img src="img/C4.5-2nd-node.png", width=350px> 
 </p>  
   
   
+### 2.2.3 Final Tree
+Using the same method, we can easily generate the final tree which each leaf reach to the perfect purity. 
   
+<p align="center">
+<img src="img/C4.5-final.png", width=350px> 
+</p>  
   
-  
-  
-  
-  
+Form the example we go through above, we see how C4.5 algorithm work on building a tree model using gain ratio instead of gain. By doing so the model can performance better on overfitting because of the "punishment" added to the criteria, so it will avoid lean to choose variable with more categories. For continuous type variables, the algorithm handling them by transforming them to nominal type. However, this transforming require we sort the variable first and calcualte the gain for each cutting point, this will require large amount of calculation for big data set. 
   
   
 # Section 3: Gini index & CART algorithm  
